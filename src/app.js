@@ -2,11 +2,20 @@ import express, { Router } from 'express';
 import errorMeddleware from './middleware/errorHandler.js';
 import router from './router/router.js';
 import morgan from 'morgan';
+import cors from 'cors';
 
 const app = express();
 
+const corsOptions = {
+    origin: process.env.FRONTEND_URL,
+    credentials: true
+}
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(morgan('dev'));
+
 
 app.use("/test", (req, res) => {
     res.send("wellcome to MobiXpress");
