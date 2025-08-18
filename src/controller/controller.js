@@ -801,7 +801,8 @@ const productByBranchId = async (req, res, next) => {
         const colorMasterListCollection = mongoose.connection.collection('colorMasterList');
         const allColorList = await colorMasterListCollection
           .aggregate([
-            { $match: { color_id: { $in: uniqueColorIdsArray } } }
+            { $match: { color_id: { $in: uniqueColorIdsArray } } },
+            { $project: {color_id: 1, color_code: 1, _id: 0}}
           ])
           .toArray();
         
@@ -810,7 +811,7 @@ const productByBranchId = async (req, res, next) => {
           const uniqueColors = new Set();
           productDetails.forEach(item => {
             allColorList.forEach(ele => {
-              if( ele.color_id && Number(item.item_colour) === ele.color_id){
+              if( Number(item.item_colour) === ele.color_id){
                 item.colorDetails = ele;
               }
             })
@@ -840,16 +841,21 @@ const productByBranchId = async (req, res, next) => {
 
 
           
-          const imageList = await modelImageColorListCollection.find({
+          const imageList = await modelImageColorListCollection.find({ 
             model_id: { $in: productDetails.map(p => p.model_id) },
             color_code: { $in: colorArray }
           }).toArray();
 
+          // const imageList = await modelImageColorListCollection.find({ // modified bt claude.ai 📌📌📌📌
+          //   model_id: { $in: productDetails.map(p => p.model_id) },
+          //   color_code: { $in: colorArray, $exists: true, $ne: null }
+          // }).toArray();
 
+          // console.log(imageList);
 
-
-
-          console.log('image list : ', imageList);
+          // productDetails.forEach(item=>{
+          //   imageList.forEach(img)
+          // })
         
           // productDetails.forEach(item => {
           //   let matchedImage;
