@@ -871,4 +871,14 @@ const uploadJsonDataInDB = async (req, res) => {
 };
 
 
-export { getHome, searchProducts, productByBranchId, allBranch, getAllOffers, getProductById , productDetails, getRelatedProducts, getAllModel, getAllBrand, uploadJsonDataInDB}
+export { getHome,
+   searchProducts, 
+   productByBranchId, 
+   allBranch, 
+   getAllOffers,
+  getProductById , 
+  productDetails, 
+  getRelatedProducts, 
+  getAllModel, 
+  getAllBrand, 
+  uploadJsonDataInDB}
